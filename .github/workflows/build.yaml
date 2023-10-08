@@ -1,0 +1,29 @@
+name: Build and Push Docker Image
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t mlops-image:latest .
+          docker login -u ${{ secrets.sohasarwar }} -p ${{ secrets.Docker@123 }}
+          docker push mlops-image:latest
+        env:
+          DOCKER_CLI_ACI=1
+        env:
+          DOCKER_BUILDKIT=1
+        env:
+          DOCKER_BUILD_OPTS=--build-arg=HTTP_PROXY=$HTTP_PROXY --build-arg=HTTPS_PROXY=$HTTPS_PROXY --build-arg=NO_PROXY=$NO_PROXY
+        env:
+          DOCKER_CLI_ACI=1
+        env:
+          DOCKER_BUILDKIT=1
